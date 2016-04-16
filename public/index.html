@@ -1,28 +1,147 @@
 <!DOCTYPE html>
 <html lang="en-US">
+
 <head>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">  
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
- </head>    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="./javascripts/fullWishList.js"></script>
+    <meta charset="utf-8" />
+    <title>My WishList App</title>
+</head>
 
 <body>
+
     <div ng-app="test" ng-controller="myCtrl">
-        <p>Create a new Wishlist:</p>
-        Name of Wish List
-        <input type="text" ng-model="name">
-        <br> Description:
-        <input type="text" ng-model="description">
-        <br>
-        <button ng-click="createWishList()"> Create Wishtlist</button>
-        <br>
-        <br>
-        <select size=5 ng-options="x as x.name for x in wishListArray" ng-model="selected">
-        </select>
-        WishList Info: {{wishilist1.name + "'s " + wishilist1.description}} item selected : {{selected}}
+
+
+        <div class="container">
+
+
+            <div class="page-header">
+                <h1>WishList  <small>My Single Page Angular.js App</small></h1>
+            </div>
+
+
+            <div class="jumbotron">
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <p>Create a new Wishlist:</p>
+                        <div class="form-inline">
+
+
+                            <p>Name of Wish List</p>
+                            <input type="text" ng-model="name" class="form-control">
+                            <p>Description:</p>
+                            <input type="text" ng-model="description" class="form-control">
+
+                        </div>
+
+                        <br>
+                        <button ng-click="createWishList()" class="btn btn-default"> Create Wishtlist</button>
+
+                    </div>
+
+
+
+
+                    <div class=" col-md-4">
+                        <p>Select a Wishlist:</p>
+
+                        <select size=5 ng-options="x as x.name for x in wishListArray" ng-model="selected">
+                        </select>
+
+
+                        <p> WishList Info: {{selected.name + "'s " + selected.description}} </p>
+                        <p> WishList Selected : {{selected}} </p>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+            </div>
+
+
+
+
+
+            <div class="jumbotron">
+
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <p>Choosee a new Item:</p>
+
+
+
+
+                        <select size=5 ng-options="x as x.name for x in wishListArray" ng-model="selected">
+                        </select>
+
+
+                        <p> Item Info: {{selected.name + "'s " + selected.description}} </p>
+                        <p> Item Selected : {{selected}} </p>
+
+                    </div>
+
+
+
+                    <div class="col-md-3">
+
+
+
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Items List
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+
+                                <li size=5 ng-repeat="x as x.name for x in wishListArray" ng-model="selected">
+
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="col-md-3">
+
+
+
+
+                        <ul class="unstyled">
+                            <li ng-repeat="wishlist in wishListArray">
+                                <label class="checkbox">
+                                    <input type="checkbox" ng-model="wishlist.name">
+                                    <span class="done-{{wishlist.name}}">{{wishlist.name}}</span>
+                                </label>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+
     </div>
-    <script src="./javascripts/fullWishList.js">
-        
-    </script>
+
+
+
 </body>
 
 </html>
