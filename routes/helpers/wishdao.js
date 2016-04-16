@@ -31,7 +31,35 @@ function WishDAO() {
                 var insertReturn = db.collection('practiceWishes').insert(list);
                 callback(insertReturn);
             })
-        }
+        },
+        getAllItemsLists: function(callback) {
+          console.log('inside get all items lists');
+            mongoDB.connect(connection.url, function(err, db) {
+              if (err) {
+                console.log('inside connection err: '+err);
+              }
+              console.log('inside the connect');
+                var cursor = db.collection('items').find();
+                cursor.toArray(function(err, result) {
+                    if (err) {
+                        console.log(err);
+                    } else if (result.length) {
+                        callback(result.slice());
+                    }
+                })
+            })
+        },
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     });
 }
 

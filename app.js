@@ -10,6 +10,7 @@ var users = require('./routes/users');
 var ping = require('./routes/ping');
 
 var item = require('./routes/item');
+var wish = require('./routes/wish');
 var app = express();
 
 // view engine setup
@@ -28,6 +29,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/ping', ping);
 app.use('/db', item);
+app.use('/db', wish);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

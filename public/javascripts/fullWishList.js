@@ -6,6 +6,13 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
         self.name = name;
         self.description = description;
     }
+    
+       function Item(name, description) {
+        var self = this;
+
+        self.name = name;
+        self.description = description;
+    }
 
     $http.get(
         '/db/find',
@@ -54,6 +61,30 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
     };
 
 
+    $http.get(
+        '/db/item',
+        null, null
+    ).then(function successCallback(response) {
+        console.log('in success call back: ');
+        console.log(response);
+        if (response.status === 200) {
+
+            $scope.itemsArray = [];
+
+
+            for (var pos in response.data) {
+
+                var obj = response.data[pos];
+
+                $scope.itemsArray.push(new Item(obj.name, obj.description))
+
+            }
+
+
+        }
+    }, function errorCallback(response) {
+        console.log('in error call back: ' + response);
+    });
 
 
 
