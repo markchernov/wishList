@@ -1,21 +1,39 @@
 var express = require('express');
 var WishDAO = require('./helpers/wishdao');
 var router = express.Router();
+
 router.post('/insert', function(req, resp, next) {
     console.log('inside insert route');
     console.log(req.body);
-    console.log('request^');
+    console.log('request');
     WishDAO().saveWishList(req.body, function(obj) {
         console.log(obj);
-        console.log('inside insert route inside item.js');
+        console.log('inside insert route inside wish.js');
         resp.send(obj);
     });
 });
+
+router.put('/update', function(req, resp, next) {
+    console.log('inside update route');
+    console.log('This is my req.body');
+    console.log(req.body);
+    
+    WishDAO().updateWishList(req.body, function(obj) {
+        console.log(obj);
+        console.log('inside update route inside wish.js');
+        resp.send(obj);
+    });
+});
+
+
+
+
+
 router.get('/find', function(req, resp, next) {
     console.log('inside find route');
     WishDAO().getAllWishLists(function(obj) {
         console.log(obj);
-        console.log('inside find route inside item.js');
+        console.log('inside find route inside wish.js');
         resp.send(obj);
     });
 });

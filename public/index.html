@@ -44,6 +44,10 @@
 
                         <br>
                         <button ng-click="createWishList()" class="btn btn-default"> Create Wishtlist</button>
+                        
+                        <br>
+                        <br>
+                        <button ng-click="updateWishList()" class="btn btn-default"> Update Wishtlist</button>
 
                     </div>
 
@@ -53,13 +57,26 @@
                     <div class=" col-md-6">
                         <p>Select a Wishlist:</p>
 
-                        <select size=5 ng-options="x as x.name for x in wishListArray" ng-model="selected1">
+                        <select size=5 ng-options="x as x.name for x in wishListArray" ng-model="selectedWish">
                         </select>
 
 
-                        <p> WishList Info: {{selected1.name + "'s " + selected1.description}} </p>
-                        <p> WishList Selected : {{selected1}} </p>
-
+                        <p> WishList Info: {{selectedWish.name + "'s " + selectedWish.description}} </p>
+                        <p> WishList Selected : {{selectedWish}} </p>                           
+                        <p> WishList Items : {{selectedWish.myItems}}</p>
+                
+                        
+                        <ul class="unstyled" ng-repeat="(key, value) in selectedWish.myItems">
+                            
+                        
+                            <!--<li ng-repeat="obj in value">  {{obj}}   </li>-->
+                            
+                            <li>  {{value}}   </li>
+                          
+                        </ul>
+                        
+                        
+                        
 
                     </div>
 
@@ -77,15 +94,21 @@
                     <div class="col-md-4">
                         <p>Choose a new Item:</p>
 
-                        <select size=5 ng-options="x as x.name for x in itemsArray" ng-model="selected2">
+                        <select size=5 ng-options="x as x.name for x in itemsArray" ng-model="selectedItem">
                         </select>
 
 
-                        <p> Item Info: {{selected2.name + "'s " + selected2.description}} </p>
-                        <p> Item Selected : {{selected2}} </p>
+                        <p> Item Info: {{selectedItem.name + "'s " + selectedItem.description}} </p>
+                        <p> Item Selected : {{selectedItem}} </p>
+
+
+
 
                     </div>
 
+
+                    <br>
+                    <button ng-click="addItemToWishList()" class="btn btn-default"> Add Item to Wishtlist</button>
 
                     <div class="col-md-4">
 
