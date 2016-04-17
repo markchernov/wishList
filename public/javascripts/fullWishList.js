@@ -61,7 +61,7 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
     var getData = function()   {
     
     $http.get(
-        '/db/find',
+        '/myWishListRoute/find',
         null, null
     ).then(function successCallback(response) {
         console.log('in success call back: ');
@@ -94,7 +94,7 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
 
     $scope.createWishList = function () {
         $http.post(
-            '/db/insert', {
+            '/myWishListRoute/insert', {
                 name: $scope.name,
                 description: $scope.description
             }, null
@@ -118,7 +118,7 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
 
     $scope.updateWishList = function () {
         $http.put(
-            '/db/update', $scope.selectedWish, null
+            '/myWishListRoute/update', $scope.selectedWish, null
         ).then(function successCallback(response) {
             console.log('in success call back: ');
             console.log(response);
@@ -136,7 +136,7 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
     
         $scope.deleteWishList = function () {
         $http.delete(
-            '/db/delete/' + $scope.selectedWish.name, null
+            '/myWishListRoute/delete/' + $scope.selectedWish.name, null
         ).then(function successCallback(response) {
             console.log('in success call back: ');
             console.log(response);
@@ -158,7 +158,7 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
     (function getItems() {
     
     $http.get(
-        '/db/item',
+        '/myItemRoute/item',
         null, null
     ).then(function successCallback(response) {
         console.log('in success call back: ');

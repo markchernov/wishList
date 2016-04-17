@@ -28,8 +28,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/ping', ping);
-app.use('/db', item);
-app.use('/db', wish);
+app.use('/myItemRoute', item);
+app.use('/myWishListRoute', wish);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
