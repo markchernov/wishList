@@ -2,15 +2,16 @@
 <html lang="en-US">
 
 <head>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="./javascripts/fullWishList.js"></script>
     <meta charset="utf-8" />
+    
     <title>My WishList App</title>
 </head>
 
@@ -26,10 +27,40 @@
                 <h1>WishList  <small>My Single Page <strong>M</strong>ongoDB/<strong>E</strong>xpress.js/<strong>A</strong>ngular.js/<strong>N</strong>ode.js App</small></h1>
             </div>
 
+
+
+
             <div class="btn-group btn-group-justified" role="group" aria-label="...">
+
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-default" ng-click="createWishList()">Create Wishtlist</button>
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Create WishList <span class="caret"></span>
+                    </button>
+
+                    <ul class="dropdown-menu">
+                        <div class="form-inline">
+                            <li>
+                                <p> Name of Wish List:</p>
+                            </li>
+                            <li>
+                                <input type="text" ng-model="name" class="form-control">
+                            </li>
+                            <li>
+                                <p> Description:</p>
+                            </li>
+                            <li>
+                                <input type="text" ng-model="description" class="form-control">
+                            </li>
+                        </div>
+
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <button type="button" class="btn btn-default" ng-click="createWishList()">Save Wishtlist</button>
+                        </li>
+                    </ul>
                 </div>
+
+
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-default" ng-click="updateWishList()">Update Wishtlist</button>
                 </div>
@@ -47,31 +78,15 @@
             <div class="jumbotron">
 
                 <div class="row">
-                    <div class="col-md-3">
-                        <p>Create a new Wishlist:</p>
-                        <div class="form-inline">
-
-
-                            <p>Name of Wish List</p>
-                            <input type="text" ng-model="name" class="form-control">
-                            <p>Description:</p>
-                            <input type="text" ng-model="description" class="form-control">
-
-                        </div>
-                    </div>
-
-
-
-
-                    <div class=" col-md-2">
-                        <p>Select a Wishlist:</p>
+                    <div class="col-md-2">
+                        <p>Select Wishlist:</p>
 
                         <select size=5 ng-options="x as x.name for x in wishListArray" ng-model="selectedWish">
                         </select>
 
                         <br>
 
-                        <p>Wishlist Description:</p>
+                        <p>Description:</p>
 
                         <li>{{selectedWish.description}}</li>
 
@@ -79,16 +94,15 @@
                     </div>
 
 
-
                     <div class="col-md-2">
-                        <p>Choose a Item:</p>
+                        <p>Choose Item:</p>
 
                         <select size=5 ng-options="x as x.name for x in itemsArray" ng-model="selectedItem">
                         </select>
 
                         <br>
 
-                        <p>Item Description:</p>
+                        <p>Description:</p>
 
                         <li>{{selectedItem.description}}</li>
 
@@ -96,7 +110,7 @@
                     </div>
 
 
-                    <div class="col-md-5">
+                    <div class="col-md-8">
 
 
                         <p>Selected Wishlist Name: {{selectedWish.name}} Description: {{selectedWish.description }}</p>
@@ -107,6 +121,7 @@
                                     <th>Item Name</th>
                                     <th>Item Description</th>
                                     <th>Claimed by</th>
+                                    <th>Date</th>
 
                                 </tr>
                             </thead>
@@ -118,7 +133,9 @@
                                     <td>{{value.description}}</td>
                                     <td>
                                         <input type="text" ng-model="value.claim">
-                                        <td>
+                                    </td>
+                                    <td>
+                                        <input type="date"  ng-model="value.date" ></td>                   
                                 </tr>
 
                             </tbody>
@@ -128,9 +145,14 @@
 
                     </div>
                 </div>
+                <!--  end row-->
+
             </div>
+            <!--  end jumbotron-->
         </div>
+        <!--  end container-->
     </div>
+    <!--  end app-->
 </body>
 
 </html>

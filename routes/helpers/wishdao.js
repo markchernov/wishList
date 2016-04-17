@@ -27,8 +27,8 @@ function WishDAO() {
         updateWishList: function (objectToUpdate, callback) {
 
 
-            var objectToUpdate = objectToUpdate;
-            var myItemsValue = objectToUpdate.myItems;
+           var objectToUpdate = objectToUpdate;
+           
             console.log('inside update wish list');
             console.log('This is my objectToUpdate.myItems');
             console.log(objectToUpdate.myItems);
@@ -47,7 +47,7 @@ function WishDAO() {
                     {
 
                         $set: {
-                            "myItems": updateValue
+                            "myItems": objectToUpdate.myItems
                         }
 
                     }
@@ -94,7 +94,7 @@ function WishDAO() {
                 if (err) {
                     console.log('insert connection error: ' + err);
                 }
-                var insertReturn = db.collection('practiceWishes').remove(myParamObj);
+                var deleteReturn = db.collection('practiceWishes').remove(myParamObj);
                 callback(deleteReturn);
             })
         }

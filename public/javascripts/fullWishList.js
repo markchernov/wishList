@@ -12,12 +12,20 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
         self.myItems = myItems;
     }
 
-    function Item(name, description, claim) {
+    function Item(name, description, claim, date) {
         var self = this;
 
         self.name = name;
         self.description = description;
-        self.claim = claim;
+        
+        if(claim)  {
+        
+        self.claim = claim;}
+            
+         if(date)   {
+        self.date = new Date(date);}
+        
+        else {self.date = new Date();}
     }
 
 
@@ -66,7 +74,7 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
         null, null
     ).then(function successCallback(response) {
         console.log('in success call back: ');
-        console.log(response);
+        //console.log(response);
         if (response.status === 200) {
 
             $scope.wishListArray = [];
@@ -75,6 +83,28 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
             for (var pos in response.data) {
 
                 var obj = response.data[pos];
+                
+                
+                    for (var position in obj.myItems  )  {
+                        
+                        
+                        var item = obj.myItems[position];
+                        
+                        
+                        
+                        console.log("This is item in get all wish lists: ")
+                        console.log(item)   
+                        
+                        obj.myItems.splice(position,1,new Item(item.name, item.description, item.claim, item.date));
+                        
+                        // replacion plain old JS object with obj of type Date in myItems Array
+                       
+                        console.log("This is array in get all wish lists: ")
+                        console.log(obj.myItems)
+                        
+                    }
+                
+                
 
                 $scope.wishListArray.push(new WishList(obj.name, obj.description, obj.myItems))
 
@@ -118,6 +148,21 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
 
 
     $scope.updateWishList = function () {
+        
+        
+        for (var item in $scope.selectedWish)  {
+             
+        var dateObj = new Date(item.date)
+        console.log("This is my date object: ")
+        console.log(dateObj)
+        
+        item.date = dateObj;
+            
+        console.log("This is item.date: ")
+        console.log(item.date)   
+        
+        }
+        
         $http.put(
             '/myWishListRoute/update', $scope.selectedWish, null
         ).then(function successCallback(response) {
