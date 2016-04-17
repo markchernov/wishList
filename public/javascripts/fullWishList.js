@@ -1,5 +1,9 @@
 angular.module('test', []).controller('myCtrl', function ($scope, $http) {
 
+    /*******************************************************  
+    CONSTRUCTORS
+  ******************************************************* */
+
     function WishList(name, description, myItems) {
         var self = this;
 
@@ -15,6 +19,47 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
         self.description = description;
     }
 
+
+    /*******************************************************  
+    ONCLICK FUNCTIONS
+  ******************************************************* */
+
+    $scope.addItemToWishList = function () {
+
+        console.log('inside addItemToWishList ');
+
+
+        console.log("this is selected wishList: ")
+        console.log($scope.selectedWish)
+
+        console.log("this is selected item: ")
+        console.log($scope.selectedItem)
+
+        if ($scope.selectedWish.myItems) {
+
+            $scope.selectedWish.myItems.push($scope.selectedItem);
+
+        } else {
+            var myItems = [];
+            myItems.push($scope.selectedItem);
+            $scope.selectedWish.myItems = myItems;
+
+        }
+
+    };
+
+
+
+    /*******************************************************  
+    REST CALLS
+  ******************************************************* */
+
+    /*  ------------------------
+            WishList
+      ------------------------*/
+
+    var getData = function()   {
+    
     $http.get(
         '/db/find',
         null, null
@@ -40,7 +85,12 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
         console.log('in error call back: ' + response);
     });
 
-
+    };
+    
+    
+    getData();
+    
+    
 
     $scope.createWishList = function () {
         $http.post(
@@ -62,33 +112,11 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
     };
 
 
-    $scope.addItemToWishList = function () {
-
-        console.log('inside addItemToWishLis ');
-
-
-        console.log("this is selected wishList: ")
-        console.log($scope.selectedWish)
-
-        console.log("this is selected item: ")
-        console.log($scope.selectedItem)
-
-        if ($scope.selectedWish.myItems) {
-
-            $scope.selectedWish.myItems.push($scope.selectedItem);
-
-        } else {
-            var myItems = [];
-            myItems.push($scope.selectedItem);
-            $scope.selectedWish.myItems = myItems;
-
-        }
-
-    };
 
 
 
-   $scope.updateWishList = function () {
+
+    $scope.updateWishList = function () {
         $http.put(
             '/db/update', $scope.selectedWish, null
         ).then(function successCallback(response) {
@@ -102,11 +130,33 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
 
 
     };
+    
+    
+    
+    
+        $scope.deleteWishList = function () {
+        $http.delete(
+            '/db/delete/' + $scope.selectedWish.name, null
+        ).then(function successCallback(response) {
+            console.log('in success call back: ');
+            console.log(response);
+
+        }, function errorCallback(response) {
+            console.log('in error call back: ' + response);
+        });
+
+        getData();
+
+    };
 
 
 
+    /*  ------------------------
+             Items
+       ------------------------*/
 
-
+    (function getItems() {
+    
     $http.get(
         '/db/item',
         null, null
@@ -132,7 +182,7 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
         console.log('in error call back: ' + response);
     });
 
-
+    })();
 
 
 });

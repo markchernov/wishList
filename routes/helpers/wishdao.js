@@ -25,37 +25,33 @@ function WishDAO() {
         },
 
         updateWishList: function (objectToUpdate, callback) {
-            
-            
+
+
             var objectToUpdate = objectToUpdate;
             var updateValue = objectToUpdate.myItems;
             console.log('inside update wish list');
             console.log('This is my objectToUpdate.myItems');
             console.log(objectToUpdate.myItems);
-            
+
             mongoDB.connect(connection.url, function (err, db) {
                 if (err) {
                     console.log('inside connection err: ' + err);
                 }
                 console.log('inside the connect');
                 var confirmation = db.collection('practiceWishes').update(
-                
-                    {name: objectToUpdate.name  }, 
-                    
+
                     {
-                    
-                    $set: {"myItems": updateValue} 
-                        
+                        name: objectToUpdate.name
+                    },
+
+                    {
+
+                        $set: {
+                            "myItems": updateValue
+                        }
+
                     }
                 );
-                /*cursor.toArray(function (err, result) {
-                    if (err) {
-                        console.log(err);
-                    } else if (result.length) {
-                        callback(result.slice());
-                    }
-                })*/
-                
                 console.log('This is my confirmation:  ');
                 console.log(confirmation);
                 callback(confirmation);
@@ -93,7 +89,15 @@ function WishDAO() {
             })
         },
 
-
+        deleteWishList: function (myParamObj, callback) {
+            mongoDB.connect(connection.url, function (err, db) {
+                if (err) {
+                    console.log('insert connection error: ' + err);
+                }
+                var insertReturn = db.collection('practiceWishes').remove(myParamObj);
+                callback(deleteReturn);
+            })
+        }
 
 
 

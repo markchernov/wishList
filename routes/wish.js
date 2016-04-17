@@ -2,6 +2,17 @@ var express = require('express');
 var WishDAO = require('./helpers/wishdao');
 var router = express.Router();
 
+router.get('/find', function(req, resp, next) {
+    console.log('inside find route');
+    WishDAO().getAllWishLists(function(obj) {
+        console.log(obj);
+        console.log('inside find route inside wish.js');
+        resp.send(obj);
+    });
+});
+module.exports = router;
+
+
 router.post('/insert', function(req, resp, next) {
     console.log('inside insert route');
     console.log(req.body);
@@ -26,15 +37,18 @@ router.put('/update', function(req, resp, next) {
 });
 
 
-
-
-
-router.get('/find', function(req, resp, next) {
-    console.log('inside find route');
-    WishDAO().getAllWishLists(function(obj) {
+router.delete('/delete/:name', function(req, resp, next) {
+    console.log('inside delete route');
+    console.log('This is my req.params');
+    console.log(req.params);
+    
+    WishDAO().deleteWishList(req.params, function(obj) {
+        console.log('This is my request.params:  ')
+        console.log(req.params);
         console.log(obj);
-        console.log('inside find route inside wish.js');
+        console.log('inside delete route inside wish.js');
         resp.send(obj);
     });
 });
-module.exports = router;
+
+
