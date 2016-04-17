@@ -12,11 +12,12 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
         self.myItems = myItems;
     }
 
-    function Item(name, description) {
+    function Item(name, description, claim) {
         var self = this;
 
         self.name = name;
         self.description = description;
+        self.claim = claim;
     }
 
 

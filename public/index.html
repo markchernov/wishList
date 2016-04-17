@@ -23,14 +23,31 @@
 
 
             <div class="page-header">
-                <h1>WishList  <small>My Single Page Angular.js App</small></h1>
+                <h1>WishList  <small>My Single Page <strong>M</strong>ongoDB/<strong>E</strong>xpress.js/<strong>A</strong>ngular.js/<strong>N</strong>ode.js App</small></h1>
             </div>
+
+            <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-default" ng-click="createWishList()">Create Wishtlist</button>
+                </div>
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-default" ng-click="updateWishList()">Update Wishtlist</button>
+                </div>
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-default" ng-click="deleteWishList()">Delete Wishtlist</button>
+                </div>
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-default" ng-click="addItemToWishList()">Add Item to Wishtlist</button>
+                </div>
+            </div>
+
+
 
 
             <div class="jumbotron">
 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <p>Create a new Wishlist:</p>
                         <div class="form-inline">
 
@@ -41,106 +58,79 @@
                             <input type="text" ng-model="description" class="form-control">
 
                         </div>
-
-                        <br>
-                        <button ng-click="createWishList()" class="btn btn-default"> Create Wishtlist</button>
-                        
-                        <br>
-                        <br>
-                        <button ng-click="updateWishList()" class="btn btn-default"> Update Wishtlist</button>
-                        
-                        <br>
-                        <br>
-                        <button ng-click="deleteWishList()" class="btn btn-default"> Delete Wishtlist</button>
-
                     </div>
 
 
 
 
-                    <div class=" col-md-6">
+                    <div class=" col-md-2">
                         <p>Select a Wishlist:</p>
 
                         <select size=5 ng-options="x as x.name for x in wishListArray" ng-model="selectedWish">
                         </select>
 
+                        <br>
 
-                        <p> WishList Info: {{selectedWish.name + "'s " + selectedWish.description}} </p>
-                        <p> WishList Selected : {{selectedWish}} </p>                           
-                        <p> WishList Items : {{selectedWish.myItems}}</p>
-                
-                        
-                        <ul class="unstyled" ng-repeat="(key, value) in selectedWish.myItems">
-                            
-                        
-                            <!--<li ng-repeat="obj in value">  {{obj}}   </li>-->
-                            
-                            <li>  {{value}}   </li>
-                          
-                        </ul>
-                        
-                        
-                        
+                        <p>Wishlist Description:</p>
+
+                        <li>{{selectedWish.description}}</li>
+
 
                     </div>
 
 
-                </div>
 
-
-
-            </div>
-
-            <div class="jumbotron">
-
-
-                <div class="row">
-                    <div class="col-md-4">
-                        <p>Choose a new Item:</p>
+                    <div class="col-md-2">
+                        <p>Choose a Item:</p>
 
                         <select size=5 ng-options="x as x.name for x in itemsArray" ng-model="selectedItem">
                         </select>
 
+                        <br>
 
-                        <p> Item Info: {{selectedItem.name + "'s " + selectedItem.description}} </p>
-                        <p> Item Selected : {{selectedItem}} </p>
+                        <p>Item Description:</p>
 
-
+                        <li>{{selectedItem.description}}</li>
 
 
                     </div>
 
 
-                    <br>
-                    <button ng-click="addItemToWishList()" class="btn btn-default"> Add Item to Wishtlist</button>
-
-                    <div class="col-md-4">
+                    <div class="col-md-5">
 
 
+                        <p>Selected Wishlist Name: {{selectedWish.name}} Description: {{selectedWish.description }}</p>
+
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Item Name</th>
+                                    <th>Item Description</th>
+                                    <th>Claimed by</th>
+
+                                </tr>
+                            </thead>
 
 
-                        <ul class="unstyled">
-                            <li ng-repeat="item in itemsArray">
-                                <label class="checkbox">
-                                    <input type="checkbox" ng-model="item.name">
-                                    <span class="done-{{item.name}}">{{item.name}}</span>
-                                </label>
-                            </li>
-                        </ul>
+                            <tbody>
+                                <tr ng-repeat="(key, value) in selectedWish.myItems">
+                                    <td>{{value.name}}</td>
+                                    <td>{{value.description}}</td>
+                                    <td>
+                                        <input type="text" ng-model="value.claim">
+                                        <td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+
 
                     </div>
-
                 </div>
             </div>
-
         </div>
-
-
-
     </div>
-
-
-
 </body>
 
 </html>

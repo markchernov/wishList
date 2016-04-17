@@ -28,7 +28,7 @@ function WishDAO() {
 
 
             var objectToUpdate = objectToUpdate;
-            var updateValue = objectToUpdate.myItems;
+            var myItemsValue = objectToUpdate.myItems;
             console.log('inside update wish list');
             console.log('This is my objectToUpdate.myItems');
             console.log(objectToUpdate.myItems);
