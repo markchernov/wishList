@@ -13,7 +13,7 @@ var router = express.Router();
 });*/
 router.get('/item', function(req, resp, next) {
     console.log('inside item find route');
-    WishDAO().getAllItemsLists(function(obj) {
+    WishDAO().getAllItemsList(function(obj) {
         console.log(obj);
         console.log('inside find route inside item.js');
         resp.send(obj);

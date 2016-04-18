@@ -71,7 +71,7 @@ function WishDAO() {
                 callback(insertReturn);
             })
         },
-        getAllItemsLists: function (callback) {
+        getAllItemsList: function (callback) {
             console.log('inside get all items lists');
             mongoDB.connect(connection.url, function (err, db) {
                 if (err) {
@@ -97,9 +97,25 @@ function WishDAO() {
                 var deleteReturn = db.collection('practiceWishes').remove(myParamObj);
                 callback(deleteReturn);
             })
+        },
+
+         getAllUsersList: function (callback) {
+            console.log('inside get all users lists');
+            mongoDB.connect(connection.url, function (err, db) {
+                if (err) {
+                    console.log('inside connection err: ' + err);
+                }
+                console.log('inside the connect');
+                var cursor = db.collection('users').find();
+                cursor.toArray(function (err, result) {
+                    if (err) {
+                        console.log(err);
+                    } else if (result.length) {
+                        callback(result.slice());
+                    }
+                })
+            })
         }
-
-
 
 
 

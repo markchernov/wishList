@@ -31,6 +31,33 @@
 
 
             <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        
+                       <span ng-if="selectedUser==null" class="animate-if" ng-model="selectedUser">   
+                           Select User                    
+                       </span>
+                         {{selectedUser.name}}
+                        <span class="caret"></span>
+                        
+                    </button>
+
+                    <ul class="dropdown-menu">
+                        <li> <p>Choose User:</p></li>
+                     
+                        <li>
+                        <select size=5 ng-options="x as x.name for x in usersArray" ng-model="selectedUser">
+                        </select>
+                            
+                        </li>  
+
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <button type="button" class="btn btn-default" ng-click="createWishList()">Choose User</button>
+                        </li>
+                    </ul>
+                </div>
 
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -86,7 +113,7 @@
 
                         <br>
 
-                        <p>Description:</p>
+                        <!--<p>Description:</p>-->
 
                         <li>{{selectedWish.description}}</li>
 
@@ -102,7 +129,7 @@
 
                         <br>
 
-                        <p>Description:</p>
+                       <!-- <p>Description:</p>-->
 
                         <li>{{selectedItem.description}}</li>
 

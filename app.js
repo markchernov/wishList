@@ -6,9 +6,8 @@ var path = require('path');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
 var ping = require('./routes/ping');
-
+var user = require('./routes/users');
 var item = require('./routes/item');
 var wish = require('./routes/wish');
 var app = express();
@@ -26,8 +25,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
 app.use('/ping', ping);
+app.use('/myUserRoute', user);
 app.use('/myItemRoute', item);
 app.use('/myWishListRoute', wish);
 
