@@ -65,7 +65,21 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
 
     };
 
+    $scope.removeItemFromWishList = function ($index) {
 
+        console.log('inside removeItemFromWishList ');
+        console.log("this is selected Item: ");
+        console.log($scope.deleteItem);
+        
+        console.log("this is $index: ");
+        console.log($index);
+
+        if ($index >= 0) {
+ 
+           $scope.selectedWish.myItems.splice($index, 1);
+
+        } 
+    };
 
     /*******************************************************  
     REST CALLS
@@ -105,7 +119,7 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
 
                         obj.myItems.splice(position, 1, new Item(item.name, item.description, item.claim, item.date));
 
-                        // replacion plain old JS object with obj of type Date in myItems Array
+                        // replace plain old JS object with obj of type Date in myItems Array
 
                         console.log("This is array in get all wish lists: ")
                         console.log(obj.myItems)

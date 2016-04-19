@@ -37,9 +37,11 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-var server = app.listen(8787, function() {
+
+
+/*var server = app.listen(8787, function() {
   console.log("listening on port " + server.address().port);
-});
+});*/
 // error handlers
 
 // development error handler

@@ -35,7 +35,7 @@
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         
-                       <span ng-if="selectedUser==null" class="animate-if" ng-model="selectedUser">   
+                       <span ng-if="selectedUser==null" class="animate-if" >   
                            Select User                    
                        </span>
                          {{selectedUser.name}}
@@ -149,6 +149,7 @@
                                     <th>Item Description</th>
                                     <th>Claimed by</th>
                                     <th>Date</th>
+                                    
 
                                 </tr>
                             </thead>
@@ -158,13 +159,10 @@
                                 <tr ng-repeat="(key, value) in selectedWish.myItems">
                                     <td>{{value.name}}</td>
                                     <td>{{value.description}}</td>
-                                    <td>
-                                        <input type="text" ng-model="value.claim">
-                                    </td>
-                                    <td>
-                                        <input type="date"  ng-model="value.date" ></td>                   
-                                </tr>
-
+                                    <td><input type="text" ng-model="value.claim"></td>
+                                    <td><input type="date"  ng-model="value.date" ></td>                                                            <td><button type="button" class="btn btn-default" ng-click="removeItemFromWishList($index)">Remove Item</button></td>          
+                                </tr>                               
+       
                             </tbody>
                         </table>
 
