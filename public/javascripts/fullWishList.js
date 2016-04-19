@@ -89,7 +89,7 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
             WishList
       ------------------------*/
 
-    var getData = function () {
+    (function () {
 
         $http.get(
             '/myWishListRoute/find',
@@ -138,10 +138,10 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
             console.log('in error call back: ' + response);
         });
 
-    };
+    })();
 
 
-    getData(); //   onload
+   // getAllWishLists(); //   onload
 
 
 
@@ -213,7 +213,8 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
             console.log('in error call back: ' + response);
         });
 
-        getData();
+        var index = $scope.wishListArray.indexOf($scope.selectedWish);
+        $scope.wishListArray.splice(index, 1);
 
     };
 
