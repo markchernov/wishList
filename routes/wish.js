@@ -12,7 +12,7 @@ router.get('/find', function(req, resp, next) {
 });
 
 
-router.get('/findByUser/:name', function(req, resp, next) {
+router.get('/findByUser/:username', function(req, resp, next) {
     console.log('inside findByUser route');
     WishDAO().getWishListsByUser(req.params,function(obj) {
         console.log('This is my request.params:  ')

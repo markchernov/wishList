@@ -36,8 +36,9 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
         if(userid) {self.userid = userid;}
         else {self.userid = null;}
         self.username = username;
-        self.password = password;
-
+        if(password) {self.password = password;}
+        else {self.password = null;}
+        
     }
     /*******************************************************  
     ONCLICK FUNCTIONS
@@ -148,10 +149,10 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
     $scope.getWishListByUser = function() {
         
         $http.get(
-            '/myWishListRoute/findByUser/' + $scope.selectedUser.name,
+            '/myWishListRoute/findByUser/' + $scope.selectedUser.username,
             null
         ).then(function successCallback(response) {
-            console.log('in success call back: ');
+            console.log('in success Controller getWishListByUser() call back: ');
             //console.log(response);
             if (response.status === 200) {
 
@@ -182,9 +183,9 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
 
                     }
 
+                    var userObj = new User(obj.user.userid,obj.user.username,obj.user.password);
 
-
-                    $scope.wishListArray.push(new WishList(obj.name, obj.description, obj.myItems, obj.user))
+                    $scope.wishListArray.push(new WishList(obj.name, obj.description, obj.myItems, userObj));
 
                 }
 
@@ -212,7 +213,7 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
             console.log('in success call back: ');
             console.log(response);
             
-            var newWish = new WishList($scope.name, $scope.description, [], $scope.selectedUser);
+            var newWish = new WishList($scope.name, $scope.description, [], new User($scope.selectedUser.userid,$scope.selectedUser.username, $scope.selectedUser.password));
             $scope.selectedWish = newWish;
             
             if($scope.wishListArray) {
