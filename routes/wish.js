@@ -10,7 +10,20 @@ router.get('/find', function(req, resp, next) {
         resp.send(obj);
     });
 });
-module.exports = router;
+
+
+router.get('/findByUser/:name', function(req, resp, next) {
+    console.log('inside findByUser route');
+    WishDAO().getWishListsByUser(req.params,function(obj) {
+        console.log('This is my request.params:  ')
+        console.log(req.params);
+        console.log('This is my response obj:  ')
+        console.log(obj);
+        console.log('inside findByUser route inside wish.js');
+        resp.send(obj);
+    });
+});
+
 
 
 router.post('/insert', function(req, resp, next) {
@@ -51,4 +64,4 @@ router.delete('/delete/:name', function(req, resp, next) {
     });
 });
 
-
+module.exports = router;

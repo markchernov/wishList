@@ -37,7 +37,7 @@
 
                         <span ng-if="selectedUser==null" class="animate-if">   
                            Select User                    
-                       </span> {{selectedUser.name}}
+                       </span> {{selectedUser.username}}
                         <span class="caret"></span>
 
                     </button>
@@ -47,7 +47,7 @@
                             <h4>Select User:</h4></li>
 
                         <li>
-                            <select size=5 ng-options="x as x.name for x in usersArray" ng-model="selectedUser">
+                            <select size=5 ng-options="x as x.username for x in usersArray" ng-model="selectedUser" ng-click="getWishListByUser()">
                             </select>
 
                         </li>
@@ -58,13 +58,13 @@
                                 <p> User Name:</p>
                             </li>
                             <li>
-                                <input type="text" ng-model="name" class="form-control">
+                                <input type="text" ng-model="newUserName" class="form-control">
                             </li>
                             <li>
                                 <p> Password:</p>
                             </li>
                             <li>
-                                <input type="text" ng-model="description" class="form-control">
+                                <input type="text" ng-model="newUserPassword" class="form-control">
                             </li>
                         </div>
 
@@ -173,6 +173,7 @@
 
                         <h3>Wishlist Name: <small>{{selectedWish.name}} </small> </h3>
                         <h3>Description: <small>{{selectedWish.description }} </small> </h3>
+                        <h3>Owner: <small>{{selectedWish.user.name }} </small> </h3>
 
                         <table class="table table-bordered">
                             <thead>

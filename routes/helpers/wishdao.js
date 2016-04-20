@@ -6,6 +6,7 @@ function WishDAO() {
         url: 'mongodb://localhost:27017/wishList'
     };
     return ({
+        
         getAllWishLists: function (callback) {
             console.log('inside get all wish lists');
             mongoDB.connect(connection.url, function (err, db) {
@@ -23,6 +24,27 @@ function WishDAO() {
                 })
             })
         },
+        
+        getWishListsByUser: function (myParam, callback) {
+            console.log('inside DAO getWishListsByUser');
+            console.log('Parameter coming in: ');
+            console.log(myParam);
+            
+            mongoDB.connect(connection.url, function (err, db) {
+                if (err) {
+                    console.log('inside connection err: ' + err);
+                }
+                console.log('inside the connect');
+                var cursor = db.collection('practiceWishes').find({'user.username': myParam.username});
+                cursor.toArray(function (err, result) {
+                    if (err) {
+                        console.log(err);
+                    } else if (result.length) {
+                        callback(result.slice());
+                    }
+                })
+            })
+        },        
 
         updateWishList: function (objectToUpdate, callback) {
 
@@ -58,19 +80,16 @@ function WishDAO() {
             })
         },
 
-
-
-
-
-        saveWishList: function (list, callback) {
+        saveWishList: function (wishlist, callback) {
             mongoDB.connect(connection.url, function (err, db) {
                 if (err) {
                     console.log('insert connection error: ' + err);
                 }
-                var insertReturn = db.collection('practiceWishes').insert(list);
+                var insertReturn = db.collection('practiceWishes').insert(wishlist);
                 callback(insertReturn);
             })
         },
+        
         getAllItemsList: function (callback) {
             console.log('inside get all items lists');
             mongoDB.connect(connection.url, function (err, db) {
@@ -89,12 +108,12 @@ function WishDAO() {
             })
         },
 
-        deleteWishList: function (myParamObj, callback) {
+        deleteWishList: function (myParam, callback) {
             mongoDB.connect(connection.url, function (err, db) {
                 if (err) {
                     console.log('insert connection error: ' + err);
                 }
-                var deleteReturn = db.collection('practiceWishes').remove(myParamObj);
+                var deleteReturn = db.collection('practiceWishes').remove(myParam);
                 callback(deleteReturn);
             })
         },
@@ -114,6 +133,23 @@ function WishDAO() {
                         callback(result.slice());
                     }
                 })
+            })
+        },
+        
+        saveUser: function (user, callback) {
+            
+            var userToSave = user;
+            
+            console.log('inside DAO saveUser() ');
+            console.log('This is userToSave ');
+            console.log(userToSave);
+            
+            mongoDB.connect(connection.url, function (err, db) {
+                if (err) {
+                    console.log('insert connection error: ' + err);
+                }
+                console.log('before callback ');
+                callback(db.collection('users').insert(user));
             })
         }
 
