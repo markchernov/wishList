@@ -167,9 +167,12 @@
                     <button type="button" class="btn btn-default" ng-click="updateWishList()">
                         <h4><small>4</small></h4>Persist Wishlist</button>
                 </div>
+                
+               
                 <div class="btn-group" role="group">
+                    <span ng-if="selectedUser.username==selectedWish.user.username" class="animate-if"> 
                     <button type="button" class="btn btn-default" ng-click="deleteWishList()">
-                        <h4><small>5</small></h4>Delete Wishlist</button>
+                        <h4><small>5</small></h4>Delete Wishlist</button></span>
                 </div>
             </div>
 
@@ -222,10 +225,13 @@
                                         <input type="date" ng-model="value.date">
                                     </td>
                                     <td>
+                                        <span ng-if="selectedUser.username == selectedWish.user.username" class="animate-if">
                                         <button type="button" class="btn btn-default" ng-click="removeItemFromWishList($index)">Remove Item</button>
-
+                                        </span>
+                                   
+                                        <span ng-if="selectedUser.username != null && selectedUser.username != selectedWish.user.username" class="animate-if">
                                         <button type="button" class="btn btn-default" ng-click="selectedUser.addClaimedItem(selectedWish.myItems[$index], $index)">Claim Item</button>
-
+                                        </span>
 
                                     </td>
                                 </tr>
