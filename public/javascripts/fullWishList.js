@@ -32,13 +32,19 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
     }
 
     function User(userid, username, password) {
-        var self = this;       
-        if(userid) {self.userid = userid;}
-        else {self.userid = null;}
+        var self = this;
+        if (userid) {
+            self.userid = userid;
+        } else {
+            self.userid = null;
+        }
         self.username = username;
-        if(password) {self.password = password;}
-        else {self.password = null;}
-        
+        if (password) {
+            self.password = password;
+        } else {
+            self.password = null;
+        }
+
     }
     /*******************************************************  
     ONCLICK FUNCTIONS
@@ -73,15 +79,15 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
         console.log('inside removeItemFromWishList ');
         console.log("this is selected Item: ");
         console.log($scope.deleteItem);
-        
+
         console.log("this is $index: ");
         console.log($index);
 
         if ($index >= 0) {
- 
-           $scope.selectedWish.myItems.splice($index, 1);
 
-        } 
+            $scope.selectedWish.myItems.splice($index, 1);
+
+        }
     };
 
     /*******************************************************  
@@ -92,68 +98,70 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
             WishList
       ------------------------*/
 
-/*    (function () {
+    /*    (function () {
 
-        $http.get(
-            '/myWishListRoute/find',
-            null, null
-        ).then(function successCallback(response) {
-            console.log('in success call back: ');
-            //console.log(response);
-            if (response.status === 200) {
+            $http.get(
+                '/myWishListRoute/find',
+                null, null
+            ).then(function successCallback(response) {
+                console.log('in success call back: ');
+                //console.log(response);
+                if (response.status === 200) {
 
-                $scope.wishListArray = [];
-
-
-                for (var pos in response.data) {
-
-                    var obj = response.data[pos];
+                    $scope.wishListArray = [];
 
 
-                    for (var position in obj.myItems) {
+                    for (var pos in response.data) {
+
+                        var obj = response.data[pos];
 
 
-                        var item = obj.myItems[position];
+                        for (var position in obj.myItems) {
+
+
+                            var item = obj.myItems[position];
 
 
 
-                        console.log("This is item in get all wish lists: ")
-                        console.log(item)
+                            console.log("This is item in get all wish lists: ")
+                            console.log(item)
 
-                        obj.myItems.splice(position, 1, new Item(item.name, item.description, item.claim, item.date));
+                            obj.myItems.splice(position, 1, new Item(item.name, item.description, item.claim, item.date));
 
-                        // replace plain old JS object with obj of type Date in myItems Array
+                            // replace plain old JS object with obj of type Date in myItems Array
 
-                        console.log("This is array in get all wish lists: ")
-                        console.log(obj.myItems)
+                            console.log("This is array in get all wish lists: ")
+                            console.log(obj.myItems)
+
+                        }
+
+
+
+                        $scope.wishListArray.push(new WishList(obj.name, obj.description, obj.myItems, obj.user))
 
                     }
 
 
-
-                    $scope.wishListArray.push(new WishList(obj.name, obj.description, obj.myItems, obj.user))
-
                 }
+            }, function errorCallback(response) {
+                console.log('in error call back: ' + response);
+            });
+
+        })();*/
 
 
-            }
-        }, function errorCallback(response) {
-            console.log('in error call back: ' + response);
-        });
 
-    })();*/
-    
-    
-    
-    
-    $scope.getWishListByUser = function() {
-        
+
+    $scope.getWishListByUser = function () {
+
         $http.get(
             '/myWishListRoute/findByUser/' + $scope.selectedUser.username,
             null
         ).then(function successCallback(response) {
             console.log('in success Controller getWishListByUser() call back: ');
-            //console.log(response);
+            console.log('This is response.data : ');
+            console.log(response);
+            
             if (response.status === 200) {
 
                 $scope.wishListArray = [];
@@ -182,8 +190,12 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
                         console.log(obj.myItems)
 
                     }
+                    
+                    console.log("This is userObj in getWishListByUser: ")
+                    console.log(obj.user)
 
-                    var userObj = new User(obj.user.userid,obj.user.username,obj.user.password);
+                    var userObj = new User(obj.user._id, obj.user.username, obj.user.password); 
+                    // obj.user._id is a MongoDB primary key for User BSON
 
                     $scope.wishListArray.push(new WishList(obj.name, obj.description, obj.myItems, userObj));
 
@@ -194,12 +206,12 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
         }, function errorCallback(response) {
             console.log('in error call back: ' + response);
         });
-        
-            
-        
+
+
+
     };
-    
-    
+
+
 
     $scope.createWishList = function () {
         $http.post(
@@ -212,21 +224,20 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
         ).then(function successCallback(response) {
             console.log('in success call back: ');
             console.log(response);
-            
-            var newWish = new WishList($scope.name, $scope.description, [], new User($scope.selectedUser.userid,$scope.selectedUser.username, $scope.selectedUser.password));
+
+            var newWish = new WishList($scope.name, $scope.description, [], new User($scope.selectedUser.userid, $scope.selectedUser.username, $scope.selectedUser.password));
             $scope.selectedWish = newWish;
-            
-            if($scope.wishListArray) {
-            $scope.wishListArray.push(newWish);}
-            
-            else{
-                
-             $scope.wishListArray = [];
-             $scope.wishListArray.push(newWish)   
-                
+
+            if ($scope.wishListArray) {
+                $scope.wishListArray.push(newWish);
+            } else {
+
+                $scope.wishListArray = [];
+                $scope.wishListArray.push(newWish)
+
             }
-                  
-            
+
+
         }, function errorCallback(response) {
             console.log('in error call back: ' + response);
         });
@@ -342,12 +353,12 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
 
                     var userObj = response.data[p];
                     var persistedUser = new User(userObj._id, userObj.username, userObj.password);
-                    
+
                     console.log('persited user inside the loop ');
                     console.log(persistedUser);
-                    
+
                     $scope.usersArray.push(persistedUser);
-                    
+
                     console.log('$scope.usersArray after push() ');
                     console.log($scope.usersArray);
 
@@ -362,7 +373,7 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
     })();
 
 
-        $scope.createNewUser = function () {
+    $scope.createNewUser = function () {
         $http.post(
             '/myUserRoute/insert', {
                 username: $scope.newUserName,
@@ -371,20 +382,22 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
         ).then(function successCallback(response) {
             console.log('This is response in createNewUser() Controller success call back: ');
             console.log(response);
-            
+
             var newUser = new User(null, $scope.newUserName, $scope.newUserPassword);
-            
-          
+
+
             $scope.selectedUser = newUser;
             console.log('This is $scope.selectedUser in createNewUser() Controller success call back: ');
             console.log($scope.selectedUser);
-                       
-            
-            if($scope.usersArray) {
-                $scope.usersArray.push(newUser);}
-            else {$scope.usersArray = [];
-                  $scope.usersArray.push(newUser);}
-          
+
+
+            if ($scope.usersArray) {
+                $scope.usersArray.push(newUser);
+            } else {
+                $scope.usersArray = [];
+                $scope.usersArray.push(newUser);
+            }
+
         }, function errorCallback(response) {
             console.log('in error call back: ' + response);
         });
