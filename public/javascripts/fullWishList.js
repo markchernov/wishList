@@ -45,6 +45,24 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
             self.password = null;
         }
 
+        self.claimedItems = [];
+
+
+        self.addClaimedItem = function (item, index) {
+
+            console.log('This is item parameter ');
+            console.log(item);
+            console.log('inside addClaimedItem() ');
+            self.claimedItems.push(item);
+            console.log('This is self.claimedItems Array');
+            console.log(self.claimedItems);
+
+            $scope.selectedWish.myItems[index].claim = self.username;
+
+        };
+
+
+
     }
     /*******************************************************  
     ONCLICK FUNCTIONS
@@ -53,23 +71,27 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
     $scope.addItemToWishList = function () {
 
         console.log('inside addItemToWishList ');
-
-
         console.log("this is selected wishList: ")
         console.log($scope.selectedWish)
-
         console.log("this is selected item: ")
         console.log($scope.selectedItem)
 
-        if ($scope.selectedWish.myItems) {
+        if ($scope.selectedWish) {
 
-            $scope.selectedWish.myItems.push($scope.selectedItem);
 
+
+            if ($scope.selectedWish.myItems) {
+
+                $scope.selectedWish.myItems.push($scope.selectedItem);
+
+            } else {
+                var myItems = [];
+                myItems.push($scope.selectedItem);
+                $scope.selectedWish.myItems = myItems;
+
+            }
         } else {
-            var myItems = [];
-            myItems.push($scope.selectedItem);
-            $scope.selectedWish.myItems = myItems;
-
+            alert('Please select WishList first');
         }
 
     };
@@ -98,56 +120,56 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
             WishList
       ------------------------*/
 
-    /*    (function () {
+    (function () {
 
-            $http.get(
-                '/myWishListRoute/find',
-                null, null
-            ).then(function successCallback(response) {
-                console.log('in success call back: ');
-                //console.log(response);
-                if (response.status === 200) {
+        $http.get(
+            '/myWishListRoute/find',
+            null, null
+        ).then(function successCallback(response) {
+            console.log('in success call back: ');
+            //console.log(response);
+            if (response.status === 200) {
 
-                    $scope.wishListArray = [];
-
-
-                    for (var pos in response.data) {
-
-                        var obj = response.data[pos];
+                $scope.allWishListsArray = [];
 
 
-                        for (var position in obj.myItems) {
+                for (var pos in response.data) {
+
+                    var obj = response.data[pos];
 
 
-                            var item = obj.myItems[position];
+                    for (var position in obj.myItems) {
 
 
-
-                            console.log("This is item in get all wish lists: ")
-                            console.log(item)
-
-                            obj.myItems.splice(position, 1, new Item(item.name, item.description, item.claim, item.date));
-
-                            // replace plain old JS object with obj of type Date in myItems Array
-
-                            console.log("This is array in get all wish lists: ")
-                            console.log(obj.myItems)
-
-                        }
+                        var item = obj.myItems[position];
 
 
 
-                        $scope.wishListArray.push(new WishList(obj.name, obj.description, obj.myItems, obj.user))
+                        console.log("This is item in get all wish lists: ")
+                        console.log(item)
+
+                        obj.myItems.splice(position, 1, new Item(item.name, item.description, item.claim, item.date));
+
+                        // replace plain old JS object with obj of type Date in myItems Array
+
+                        console.log("This is array in get all wish lists: ")
+                        console.log(obj.myItems)
 
                     }
 
 
-                }
-            }, function errorCallback(response) {
-                console.log('in error call back: ' + response);
-            });
 
-        })();*/
+                    $scope.allWishListsArray.push(new WishList(obj.name, obj.description, obj.myItems, obj.user))
+
+                }
+
+
+            }
+        }, function errorCallback(response) {
+            console.log('in error call back: ' + response);
+        });
+
+    })();
 
 
 
@@ -161,7 +183,7 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
             console.log('in success Controller getWishListByUser() call back: ');
             console.log('This is response.data : ');
             console.log(response);
-            
+
             if (response.status === 200) {
 
                 $scope.wishListArray = [];
@@ -190,11 +212,11 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
                         console.log(obj.myItems)
 
                     }
-                    
+
                     console.log("This is userObj in getWishListByUser: ")
                     console.log(obj.user)
 
-                    var userObj = new User(obj.user._id, obj.user.username, obj.user.password); 
+                    var userObj = new User(obj.user._id, obj.user.username, obj.user.password);
                     // obj.user._id is a MongoDB primary key for User BSON
 
                     $scope.wishListArray.push(new WishList(obj.name, obj.description, obj.myItems, userObj));
@@ -250,30 +272,35 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
     $scope.updateWishList = function () {
 
 
-        for (var item in $scope.selectedWish) {
+        if ($scope.selectedWish) {
 
-            var dateObj = new Date(item.date);
-            console.log("This is my date object: ")
-            console.log(dateObj)
 
-            item.date = dateObj;
+            for (var item in $scope.selectedWish) {
 
-            console.log("This is item.date: ")
-            console.log(item.date)
+                var dateObj = new Date(item.date);
+                console.log("This is my date object: ")
+                console.log(dateObj)
 
+                item.date = dateObj;
+
+                console.log("This is item.date: ")
+                console.log(item.date)
+
+            }
+
+            $http.put(
+                '/myWishListRoute/update', $scope.selectedWish, null
+            ).then(function successCallback(response) {
+                console.log('in success call back: ');
+                console.log(response);
+
+            }, function errorCallback(response) {
+                console.log('in error call back: ' + response);
+            });
+
+        } else {
+            alert('Please select WishList first');
         }
-
-        $http.put(
-            '/myWishListRoute/update', $scope.selectedWish, null
-        ).then(function successCallback(response) {
-            console.log('in success call back: ');
-            console.log(response);
-
-        }, function errorCallback(response) {
-            console.log('in error call back: ' + response);
-        });
-
-
 
     };
 
@@ -281,22 +308,29 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
 
 
     $scope.deleteWishList = function () {
-        $http.delete(
-            '/myWishListRoute/delete/' + $scope.selectedWish.name, null
-        ).then(function successCallback(response) {
-            console.log('in success call back: ');
-            console.log(response);
 
-        }, function errorCallback(response) {
-            console.log('in error call back: ' + response);
-        });
+        if ($scope.selectedWish) {
 
-        var index = $scope.wishListArray.indexOf($scope.selectedWish);
-        $scope.wishListArray.splice(index, 1);
 
+            $http.delete(
+                '/myWishListRoute/delete/' + $scope.selectedWish.name, null
+            ).then(function successCallback(response) {
+                console.log('in success call back: ');
+                console.log(response);
+
+            }, function errorCallback(response) {
+                console.log('in error call back: ' + response);
+            });
+
+            var index = $scope.allWishListsArray.indexOf($scope.selectedWish);
+            $scope.allWishListsArray.splice(index, 1);
+
+
+
+        } else {
+            alert('Please select WishList first');
+        }
     };
-
-
 
     /*  ------------------------
              Items

@@ -3,6 +3,7 @@
 
 <head>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-cookies.js"></script>-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
@@ -34,7 +35,7 @@
 
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
+                        <h4><small>1</small></h4>
                         <span ng-if="selectedUser==null" class="animate-if">   
                            Select User                    
                        </span> {{selectedUser.username}}
@@ -77,17 +78,27 @@
 
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Select WishList <span class="caret"></span>
+                        <h4><small>2</small></h4> Select WishList <span class="caret"></span>
                     </button>
 
                     <ul class="dropdown-menu">
 
-                        <h4>Select Wishlist:</h4>
+                        <h4>Select {{selectedUser.username}}'s Wishlist:</h4>
 
                         <select size=5 ng-options="x as x.name for x in wishListArray" ng-model="selectedWish">
                         </select>
 
                         <br>
+
+                        <h4>Select other's Wishlist:</h4>
+
+                        <select size=5 ng-options="x as x.name for x in allWishListsArray" ng-model="selectedWish">
+                        </select>
+
+                        <br>
+
+
+
 
                         <h4>Create New Wishlist:</h4>
                         <div class="form-inline">
@@ -110,11 +121,13 @@
                             <button type="button" class="btn btn-default" ng-click="createWishList()">Save New Wishlist</button>
                         </li>
                     </ul>
+
+
                 </div>
 
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Add Items <span class="caret"></span>
+                        <h4><small>3</small></h4> Add Items <span class="caret"></span>
                     </button>
 
                     <ul class="dropdown-menu">
@@ -151,10 +164,12 @@
 
 
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-default" ng-click="updateWishList()">Persist Wishlist</button>
+                    <button type="button" class="btn btn-default" ng-click="updateWishList()">
+                        <h4><small>4</small></h4>Persist Wishlist</button>
                 </div>
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-default" ng-click="deleteWishList()">Delete Wishlist</button>
+                    <button type="button" class="btn btn-default" ng-click="deleteWishList()">
+                        <h4><small>5</small></h4>Delete Wishlist</button>
                 </div>
             </div>
 
@@ -192,14 +207,26 @@
                                 <tr ng-repeat="(key, value) in selectedWish.myItems">
                                     <td>{{value.name}}</td>
                                     <td>{{value.description}}</td>
+                                    <!--  <td>
+                                        <input type="text" ng-model="value.claim" ng-click= "selectedUser.addClaimedItem(selectedWish.myItems[$index])">
+                                    </td>-->
+
                                     <td>
-                                        <input type="text" ng-model="value.claim">
+
+                                        {{value.claim}}
+
                                     </td>
+
+
                                     <td>
                                         <input type="date" ng-model="value.date">
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-default" ng-click="removeItemFromWishList($index)">Remove Item</button>
+
+                                        <button type="button" class="btn btn-default" ng-click="selectedUser.addClaimedItem(selectedWish.myItems[$index], $index)">Claim Item</button>
+
+
                                     </td>
                                 </tr>
 
