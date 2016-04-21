@@ -48,7 +48,7 @@
                             <h4>Select User:</h4></li>
 
                         <li>
-                            <select size=5 ng-options="x as x.username for x in usersArray" ng-model="selectedUser" ng-click="getWishListByUser()">
+                            <select class="table"  size=5 ng-options="x as x.username for x in usersArray" ng-model="selectedUser" ng-click="getWishListByUser()">
                             </select>
 
                         </li>
@@ -90,14 +90,14 @@
 
                         <h4>Select {{selectedUser.username}}'s Wishlist:</h4>
 
-                        <select size=5 ng-options="x as x.name for x in wishListArray" ng-model="selectedWish">
+                        <select class="table" size=5 ng-options="x as x.name for x in wishListArray" ng-model="selectedWish">
                         </select>
 
                         <br>
 
                         <h4>Select other's Wishlist:</h4>
 
-                        <select size=5 ng-options="x as x.name for x in allWishListsArray" ng-model="selectedWish">
+                        <select class="table" size=5 ng-options="x as x.name for x in allWishListsArray" ng-model="selectedWish">
                         </select>
 
                         <br>
@@ -143,7 +143,7 @@
 
                         <h4>Select Item:</h4>
 
-                        <select size=5 ng-options="x as x.name for x in itemsArray" ng-model="selectedItem" ng-click="addItemToWishList()">
+                        <select class="table" size=5 ng-options="x as x.name for x in itemsArray" ng-model="selectedItem" ng-click="addItemToWishList()">
                         </select>
 
                         <br>
@@ -206,10 +206,15 @@
 
                     <div class="col-md-12">
 
-
-                        <h3>Wishlist Name: <small>{{selectedWish.name}} </small> </h3>
-                        <h3>Description: <small>{{selectedWish.description }} </small> </h3>
-                        <h3>Owner: <small>{{selectedWish.user.username }} </small> </h3>
+                        <ul class="nav nav-tabs nav-justified">
+                         <li class="list-group-item disabled" role="presentation" ><h3>Wishlist Name: <small>{{selectedWish.name}} </small> </h3></li>
+                         <li class="list-group-item disabled" role="presentation"><h3>Description: <small>{{selectedWish.description }} </small> </h3></li>
+                         <li class="list-group-item disabled" role="presentation"> <h3>Owner: <small>{{selectedWish.user.username }} </small> </h3></li>
+                         </ul>
+                        
+                        <br>
+                        <br>
+                       
 
                         <table class="table table-bordered">
                             <thead>
