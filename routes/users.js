@@ -7,6 +7,26 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
+
+router.get('/login/:username/:password', function(req, resp, next) {
+    console.log('inside user login route');
+    console.log('req.params coming in ');
+    console.log(req.params);
+    
+    
+    req.session.wishListUser = req.params.username;
+    
+    WishDAO().checkLogin(req.params, function(loginUserArray) {
+    
+        console.log('response loginConfirmation from inside WishDAO().checkLogin() callback ');
+        console.log(loginUserArray);
+        
+        resp.send(loginUserArray[0]);
+        
+    });
+});
+
+
 router.get('/allUsers', function(req, resp, next) {
     console.log('inside user find route');
     WishDAO().getAllUsersList(function(arrayOfUsers) {
@@ -42,5 +62,10 @@ router.put('/update', function(req, resp, next) {
         resp.send(obj);
     });
 });
+
+
+
+
+
 
 module.exports = router;

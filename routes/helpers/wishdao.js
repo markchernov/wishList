@@ -6,7 +6,7 @@ function WishDAO() {
         url: 'mongodb://localhost:27017/wishList'
     };
     return ({
-        
+
         getAllWishLists: function (callback) {
             console.log('inside get all wish lists');
             mongoDB.connect(connection.url, function (err, db) {
@@ -24,18 +24,20 @@ function WishDAO() {
                 })
             })
         },
-        
+
         getWishListsByUser: function (myParam, callback) {
             console.log('inside DAO getWishListsByUser');
             console.log('Parameter coming in: ');
             console.log(myParam);
-            
+
             mongoDB.connect(connection.url, function (err, db) {
                 if (err) {
                     console.log('inside connection err: ' + err);
                 }
                 console.log('inside the connect');
-                var cursor = db.collection('practiceWishes').find({'user.username': myParam.username});
+                var cursor = db.collection('practiceWishes').find({
+                    'user.username': myParam.username
+                });
                 cursor.toArray(function (err, result) {
                     if (err) {
                         console.log(err);
@@ -44,13 +46,13 @@ function WishDAO() {
                     }
                 })
             })
-        },        
+        },
 
         updateWishList: function (objectToUpdate, callback) {
 
 
-           var objectToUpdate = objectToUpdate;
-           
+            var objectToUpdate = objectToUpdate;
+
             console.log('inside update wish list');
             console.log('This is my objectToUpdate.myItems');
             console.log(objectToUpdate.myItems);
@@ -89,7 +91,7 @@ function WishDAO() {
                 callback(insertReturn);
             })
         },
-        
+
         getAllItemsList: function (callback) {
             console.log('inside get all items lists');
             mongoDB.connect(connection.url, function (err, db) {
@@ -118,7 +120,7 @@ function WishDAO() {
             })
         },
 
-         getAllUsersList: function (callback) {
+        getAllUsersList: function (callback) {
             console.log('inside get all users lists');
             mongoDB.connect(connection.url, function (err, db) {
                 if (err) {
@@ -135,15 +137,15 @@ function WishDAO() {
                 })
             })
         },
-        
+
         saveUser: function (user, callback) {
-            
+
             var userToSave = user;
-            
+
             console.log('inside DAO saveUser() ');
             console.log('This is userToSave ');
             console.log(userToSave);
-            
+
             mongoDB.connect(connection.url, function (err, db) {
                 if (err) {
                     console.log('insert connection error: ' + err);
@@ -151,13 +153,13 @@ function WishDAO() {
                 console.log('before callback ');
                 callback(db.collection('users').insert(user));
             })
-        },        
+        },
 
         updateUser: function (objectToUpdate, callback) {
 
 
-           var objectToUpdate = objectToUpdate;
-           
+            var objectToUpdate = objectToUpdate;
+
             console.log('inside DAO update user');
             console.log('This is my objectToUpdate.claimedItems');
             console.log(objectToUpdate.claimedItems);
@@ -185,11 +187,36 @@ function WishDAO() {
                 console.log(confirmation);
                 callback(confirmation);
             })
+        },
+
+        checkLogin: function (myParams, callback) {
+
+            console.log('inside DAO checkLogin() ');
+            console.log('This is myParams ');
+            var myParams = myParams;
+            console.log(myParams);
+
+            mongoDB.connect(connection.url, function (err, db) {
+                if (err) {
+                    console.log('insert connection error: ' + err);
+                }
+                
+                console.log('inside DAO checkLogin connect');
+                var cursor = db.collection('users').find(myParams);
+
+
+                cursor.toArray(function (err, result) {
+                    if (err) {
+                        console.log(err);
+                    } else if (result.length) {
+                        callback(result.slice());
+                    }
+                })
+
+
+
+            })
         }
-
-
-
-
 
     });
 }

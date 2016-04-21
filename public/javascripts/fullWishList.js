@@ -468,7 +468,41 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
     };
 
 
+   $scope.login = function () {
+
+        $http.get(
+            '/myUserRoute/login/' + $scope.selectedUser.username + '/' + $scope.selectedUser.password + '',
+            null, null
+        ).then(function successCallback(response) {
+            console.log('in Controller login()  success call back: ');
+            console.log(response.data);
+            if (response.status === 200) {
+
+                    var userObj = response.data;
+                    console.log('response.data inside Controller login() ');
+                    console.log(userObj);
+                
+                
+                    var matchedUser = new User(userObj._id, userObj.username, userObj.password);
+
+                    console.log('matched user Object inside Controller login() ');
+                    console.log(matchedUser);
+
+                    $scope.selectedUser = matchedUser;
+
+                    console.log('$scope.selectedUser after login() ');
+                    console.log($scope.selectedUser);
+
+                }
 
 
+            })
+             , function errorCallback(response) {
+            console.log('in error call back: ' + response);
+        };
 
-});
+    };
+
+   });  //  end of controller
+
+

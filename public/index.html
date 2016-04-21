@@ -48,9 +48,11 @@
                             <h4>Select User:</h4></li>
 
                         <li>
-                            <select class="table"  size=5 ng-options="x as x.username for x in usersArray" ng-model="selectedUser" ng-click="getWishListByUser()">
+                            <select class="table"  size=5 ng-options="x as x.username for x in usersArray" ng-model="selectedUser" ng-click="login()">
                             </select>
 
+                            <!--ng-click="getWishListByUser()"-->
+                            
                         </li>
 
                         <h4>Create New User:</h4>
@@ -82,7 +84,7 @@
                 </div>
 
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="getWishListByUser()">
                         <h4><small>2</small></h4> Select WishList <span class="caret"></span>
                     </button>
 
