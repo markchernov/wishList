@@ -151,6 +151,40 @@ function WishDAO() {
                 console.log('before callback ');
                 callback(db.collection('users').insert(user));
             })
+        },        
+
+        updateUser: function (objectToUpdate, callback) {
+
+
+           var objectToUpdate = objectToUpdate;
+           
+            console.log('inside DAO update user');
+            console.log('This is my objectToUpdate.claimedItems');
+            console.log(objectToUpdate.claimedItems);
+
+            mongoDB.connect(connection.url, function (err, db) {
+                if (err) {
+                    console.log('inside connection err: ' + err);
+                }
+                console.log('inside the connect');
+                var confirmation = db.collection('users').update(
+
+                    {
+                        username: objectToUpdate.username
+                    },
+
+                    {
+
+                        $set: {
+                            "claimedItems": objectToUpdate.claimedItems
+                        }
+
+                    }
+                );
+                console.log('This is my confirmation:  ');
+                console.log(confirmation);
+                callback(confirmation);
+            })
         }
 
 

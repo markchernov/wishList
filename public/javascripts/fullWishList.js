@@ -274,24 +274,27 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
 
         if ($scope.selectedWish) {
 
+            for (var itemPos in $scope.selectedWish.myItems) {
 
-            for (var item in $scope.selectedWish) {
+                console.log("This is my $scope.selectedWish.myItems Array: ");
+                console.log($scope.selectedWish.myItems);
 
-                var dateObj = new Date(item.date);
-                console.log("This is my date object: ")
-                console.log(dateObj)
+                console.log("This is my item: ");
+                console.log($scope.selectedWish.myItems[itemPos]);
 
-                item.date = dateObj;
 
-                console.log("This is item.date: ")
-                console.log(item.date)
+                var dateObj = new Date($scope.selectedWish.myItems[itemPos].date);
+                console.log("This is my date object: ");
+                console.log(dateObj);
+
+                $scope.selectedWish.myItems[itemPos].date = dateObj;
 
             }
 
             $http.put(
                 '/myWishListRoute/update', $scope.selectedWish, null
             ).then(function successCallback(response) {
-                console.log('in success call back: ');
+                console.log('in success callback from update WishList: ');
                 console.log(response);
 
             }, function errorCallback(response) {
@@ -439,6 +442,31 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
 
 
     };
+
+    $scope.updateUser = function () {
+
+        console.log('inside Controller updateUser()');
+        console.log('My current $scope.selectedUser ');
+        console.log($scope.selectedUser);
+            
+        if ($scope.selectedUser) {
+
+            $http.put(
+                '/myUserRoute/update', $scope.selectedUser, null
+            ).then(function successCallback(response) {
+                console.log('in success callback from update user: ');
+                console.log(response);
+
+            }, function errorCallback(response) {
+                console.log('in error call back: ' + response);
+            });
+
+        } else {
+            alert('Please select User first');
+        }
+
+    };
+
 
 
 

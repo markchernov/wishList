@@ -31,4 +31,16 @@ router.post('/insert', function(req, resp, next) {
     });
 });
 
+router.put('/update', function(req, resp, next) {
+    console.log('inside update user route');
+    console.log('This is my req.body');
+    console.log(req.body);
+    
+    WishDAO().updateUser(req.body, function(obj) {
+        console.log(obj);
+        console.log('inside update route inside users.js');
+        resp.send(obj);
+    });
+});
+
 module.exports = router;
