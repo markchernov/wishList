@@ -4,7 +4,7 @@ var path = require('path');
 // var logger = require('morgan');
 // var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var session = require('express-session');
+
 
 var routes = require('./routes/index');
 var ping = require('./routes/ping');
@@ -12,7 +12,6 @@ var user = require('./routes/users');
 var item = require('./routes/item');
 var wish = require('./routes/wish');
 var app = express();
-var credentials = require('./routes/credentials.js');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -26,11 +25,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({
-    resave : false,
-    saveUninitialized : false,
-    secret : credentials.cookieSecret
-}));
 
 
 

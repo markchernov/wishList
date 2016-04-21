@@ -12,7 +12,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src="./javascripts/fullWishList.js"></script>
     <meta charset="utf-8" />
-
     <title>My WishList App</title>
 </head>
 
@@ -44,17 +43,40 @@
                     </button>
 
                     <ul class="dropdown-menu">
+                        
+                        <form name="loginForm" class="form-inline">
+                        
                         <li>
                             <h4>Select User:</h4></li>
 
                         <li>
-                            <select class="table"  size=5 ng-options="x as x.username for x in usersArray" ng-model="selectedUser" ng-click="login()">
+                            <select class="table"  size=5 ng-options="x as x.username for x in usersArray" ng-model="selectedUser">
                             </select>
 
                             <!--ng-click="getWishListByUser()"-->
                             
                         </li>
+                        
+                        <li>
+                            <h4>Type Password:</h4></li>
+                        <li>
+                                <input type="text" name='loginPassword' class="form-control" ng-model="loginPassword" required>
+                                <span ng-show="loginForm.loginPassword.$touched && loginForm.loginPassword.$invalid"> 
+                                    <br> The password is required.</span>
 
+                            </li>
+                            
+                            <li role="separator" class="divider"></li>
+                        <li>
+                            <button type="button" ng-disabled='loginForm.username.$invalid || loginForm.loginPassword.$invalid' class="btn btn-default" ng-click="login()">Login</button>
+                        </li>
+                            
+                            
+                        
+                        </form>
+
+                        <li role="separator" class="divider"></li>
+                        <br>
                         <h4>Create New User:</h4>
                         <form name="userForm" class="form-inline">
                             <li>
@@ -267,7 +289,6 @@
         <!--  end container-->
     </div>
     <!--  end app-->
-
 </body>
 
 </html>

@@ -1,6 +1,18 @@
 var express = require('express');
 var WishDAO = require('./helpers/wishdao');
 var router = express.Router();
+var session = require('express-session');
+var credentials = require('./credentials');
+
+
+router.use(session({
+    resave : false,
+    saveUninitialized : false,
+    secret : credentials.cookieSecret,
+    key: 'wishListUser'
+}));
+
+
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -18,10 +30,26 @@ router.get('/login/:username/:password', function(req, resp, next) {
     
     WishDAO().checkLogin(req.params, function(loginUserArray) {
     
-        console.log('response loginConfirmation from inside WishDAO().checkLogin() callback ');
+        console.log('in route with response loginConfirmation from inside WishDAO().checkLogin() callback ');
         console.log(loginUserArray);
         
-        resp.send(loginUserArray[0]);
+        if(typeof loginUserArray[0] === 'object')   {
+            
+         req.session.wishListUser = req.params.username;   
+            
+         resp.send(loginUserArray[0]);   
+            
+        }
+        
+        else{
+            
+            console.log('in else with response');
+            console.log(loginUserArray);
+         
+            resp.send({username: "User not found"});// sending back "User not found"
+            
+        }
+        
         
     });
 });

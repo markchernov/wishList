@@ -204,13 +204,31 @@ function WishDAO() {
                 console.log('inside DAO checkLogin connect');
                 var cursor = db.collection('users').find(myParams);
 
+                console.log('returned cursor before toArray ');
+                console.log(cursor);
 
                 cursor.toArray(function (err, result) {
                     if (err) {
                         console.log(err);
                     } else if (result.length) {
+                        
+                        console.log('result after toArray ');
+                        console.log(result);
+                        
                         callback(result.slice());
                     }
+                    
+                    else  {
+                        
+                        console.log('result after toArray with no match to user');
+                        console.log(result); 
+                        
+                        callback("User not found");
+                        
+                    }
+                    
+                    
+                    
                 })
 
 

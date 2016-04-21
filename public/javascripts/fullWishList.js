@@ -471,17 +471,22 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
    $scope.login = function () {
 
         $http.get(
-            '/myUserRoute/login/' + $scope.selectedUser.username + '/' + $scope.selectedUser.password + '',
+            '/myUserRoute/login/' + $scope.selectedUser.username + '/' + $scope.loginPassword + '',
             null, null
         ).then(function successCallback(response) {
             console.log('in Controller login()  success call back: ');
             console.log(response.data);
             if (response.status === 200) {
+                
+                    console.log('response inside Controller login() ');
+                    console.log(response);
+                
 
                     var userObj = response.data;
                     console.log('response.data inside Controller login() ');
                     console.log(userObj);
                 
+                    if(typeof userObj === 'object')  {
                 
                     var matchedUser = new User(userObj._id, userObj.username, userObj.password);
 
@@ -491,7 +496,15 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
                     $scope.selectedUser = matchedUser;
 
                     console.log('$scope.selectedUser after login() ');
-                    console.log($scope.selectedUser);
+                    console.log($scope.selectedUser);}
+                
+                
+                   else{
+                       
+                       console.log('in else response inside Controller login() ');
+                       console.log(response);   
+                       $scope.selectedUser =  {username: "Try Login Again"}  }
+                
 
                 }
 
