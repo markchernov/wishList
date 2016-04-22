@@ -122,7 +122,7 @@
                 </div>
 
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="getWishListByUser()" ng-disabled='selectedUser.username == null'>
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="getWishListByUser(); getOthersWishLists()" ng-disabled='selectedUser.username == null'>
                         <h4><small>2</small></h4> Select WishList <span class="caret"></span>
                     </button>
 
@@ -141,8 +141,6 @@
                         </select>
 
                         <br>
-
-
 
 
                         <h4>Create New Wishlist:</h4>
@@ -223,9 +221,6 @@
 
 
                 <div class="btn-group" role="group">
-                    <!--<span ng-if="selectedUser.username==selectedWish.user.username" class="animate-if"> 
-                    <button type="button" class="btn btn-default" ng-click="deleteWishList()">
-                        <h4><small>5</small></h4>Delete Wishlist</button></span>-->
 
                     <button type="button" ng-disabled='selectedUser.username != selectedWish.user.username || selectedUser.username == null' class="btn btn-default" ng-click="deleteWishList()">
                         <h4><small>5</small></h4>Delete Wishlist</button>
@@ -235,14 +230,9 @@
             </div>
 
 
-
-
             <div class="jumbotron">
 
                 <div class="row">
-
-
-
 
                     <div class="col-md-12">
 
@@ -296,8 +286,6 @@
 
                             </tbody>
                         </table>
-
-
 
                     </div>
                 </div>

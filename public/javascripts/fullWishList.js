@@ -120,14 +120,14 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
             WishList
       ------------------------*/
 
-    (function () {
+   $scope.getOthersWishLists = function () {
 
         $http.get(
             '/myWishListRoute/find',
             null, null
         ).then(function successCallback(response) {
-            console.log('in success call back: ');
-            //console.log(response);
+            console.log('in success call back get other wishLists: ');
+            console.log(response);
             if (response.status === 200) {
 
                 $scope.allWishListsArray = [];
@@ -136,6 +136,14 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
                 for (var pos in response.data) {
 
                     var obj = response.data[pos];
+                    
+                    console.log('wishList object in get other wishLists : ');
+                    console.log(response.data[pos]);
+                    
+                    if (obj.user.username === $scope.selectedUser.username) {
+                        
+                        continue; // skip logged in user wishList
+                    }
 
 
                     for (var position in obj.myItems) {
@@ -157,8 +165,6 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
 
                     }
 
-
-
                     $scope.allWishListsArray.push(new WishList(obj.name, obj.description, obj.myItems, obj.user))
 
                 }
@@ -169,7 +175,7 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
             console.log('in error call back: ' + response);
         });
 
-    })();
+    };
 
 
 
