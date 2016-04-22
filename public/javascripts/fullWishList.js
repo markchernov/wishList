@@ -516,6 +516,30 @@ angular.module('test', []).controller('myCtrl', function ($scope, $http) {
 
     };
 
+       $scope.logout = function () {
+
+        $http.get(
+            '/myUserRoute/logout',
+            null, null
+        ).then(function successCallback(response) {
+            console.log('in Controller logout()  success call back. This is response.data: ');
+            console.log(response.data);
+            if (response.status === 200) {
+                
+                    console.log('response inside Controller logout() ');
+                    console.log(response);
+                    $scope.selectedUser = null;
+                    console.log('$scope.selectedUser after logout() ');
+                    console.log($scope.selectedUser);}
+           }
+
+             , function errorCallback(response) {
+            console.log('in error call back: ' + response);
+        });
+
+    };
+    
+    
    });  //  end of controller
 
 

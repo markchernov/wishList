@@ -43,19 +43,19 @@
                     </button>
 
                     <ul class="dropdown-menu">
-                        
+
                         <form name="loginForm" class="form-inline">
-                        
-                        <li>
-                            <h4>Select User:</h4></li>
 
-                        <li>
-                            <select class="table"  size=5 ng-options="x as x.username for x in usersArray" ng-model="selectedUser">
-                            </select>
+                            <li>
+                                <h4>Select User:</h4></li>
 
-                            <!--ng-click="getWishListByUser()"-->
-                            
-                        </li>
+                            <li>
+                                <select class="table" size=5 ng-options="x as x.username for x in usersArray" ng-model="selectedUser">
+                                </select>
+
+                            </li>
+
+                            <span ng-show="!selectedUser">
                         
                         <li>
                             <h4>Type Password:</h4></li>
@@ -65,14 +65,30 @@
                                     <br> The password is required.</span>
 
                             </li>
-                            
+
+                            </span>
+
                             <li role="separator" class="divider"></li>
-                        <li>
-                            <button type="button" ng-disabled='loginForm.username.$invalid || loginForm.loginPassword.$invalid' class="btn btn-default" ng-click="login()">Login</button>
-                        </li>
+                            <li>
+
+
+
+                                <span ng-show="!selectedUser"> 
                             
+                            <button type="button" ng-disabled='loginForm.username.$invalid || loginForm.loginPassword.$invalid' class="btn btn-default" ng-click="login()">Login</button></span>
+
+                            </li>
+
+                            <li>
+                                <span ng-show="selectedUser"> 
                             
-                        
+                            <button type="button"  class="btn btn-default" ng-click="logout()">Logout</button></span>
+
+
+                            </li>
+
+
+
                         </form>
 
                         <li role="separator" class="divider"></li>
@@ -106,7 +122,7 @@
                 </div>
 
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="getWishListByUser()">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="getWishListByUser()" ng-disabled='selectedUser.username == null'>
                         <h4><small>2</small></h4> Select WishList <span class="caret"></span>
                     </button>
 
@@ -231,14 +247,17 @@
                     <div class="col-md-12">
 
                         <ul class="nav nav-tabs nav-justified">
-                         <li class="list-group-item disabled" role="presentation" ><h3>Wishlist Name: <small>{{selectedWish.name}} </small> </h3></li>
-                         <li class="list-group-item disabled" role="presentation"><h3>Description: <small>{{selectedWish.description }} </small> </h3></li>
-                         <li class="list-group-item disabled" role="presentation"> <h3>Owner: <small>{{selectedWish.user.username }} </small> </h3></li>
-                         </ul>
-                        
+                            <li class="list-group-item disabled" role="presentation">
+                                <h3>Wishlist Name: <small>{{selectedWish.name}} </small> </h3></li>
+                            <li class="list-group-item disabled" role="presentation">
+                                <h3>Description: <small>{{selectedWish.description }} </small> </h3></li>
+                            <li class="list-group-item disabled" role="presentation">
+                                <h3>Owner: <small>{{selectedWish.user.username }} </small> </h3></li>
+                        </ul>
+
                         <br>
                         <br>
-                       
+
 
                         <table class="table table-bordered">
                             <thead>

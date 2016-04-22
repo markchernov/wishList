@@ -46,12 +46,21 @@ router.get('/login/:username/:password', function(req, resp, next) {
             console.log('in else with response');
             console.log(loginUserArray);
          
-            resp.send({username: "User not found"});// sending back "User not found"
+            resp.send({username: "User logged out"});// sending back "User not found"
             
         }
         
         
     });
+});
+
+router.get('/logout', function(req, resp, next) {
+    console.log('inside user logout route');
+   
+    req.session.wishListUser = null;
+    delete req.session.wishListUser;  // can't delee session for some reason
+      
+    resp.send({username: "User logged out"});// sending back "User logged out"
 });
 
 
